@@ -62,5 +62,8 @@ Prerequisites:
            "email": "helloworld@gmail.com"
        }'
       ```
-    
+    - ```
+      curl --location --request GET 'http://localhost:1337/api/sample/getEmailById?id=1'
+      ```
+    - 
     
