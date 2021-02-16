@@ -15,7 +15,7 @@ public class SampleController {
     SampleService sampleService;
 
     @GetMapping(value = "/getServiceName")
-    public String getName() {
+    public String getServiceName() {
         return sampleService.getServiceName();
     }
 
@@ -25,7 +25,7 @@ public class SampleController {
     }
 
     @PostMapping(value = "/saveUser")
-    public Boolean saveName(@RequestBody User user) {
+    public Boolean saveUser(@RequestBody User user) {
         sampleService.saveUser(user);
         return true;
     }
@@ -48,7 +48,7 @@ public class SampleController {
      */
     @GetMapping(value = "/dummyGet/{name}")
     public String dummyGet(@PathVariable("name") String name, @RequestParam int id) {
-        log.info("Dummy Post End Point Called with following name {} and id {}", name, id);
+        log.info("Dummy Get End Point Called with following name {} and id {}", name, id);
         return name;
     }
 }
