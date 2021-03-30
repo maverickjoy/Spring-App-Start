@@ -4,6 +4,7 @@ import com.demo.project.SpringDemoApp.model.User;
 import com.demo.project.SpringDemoApp.service.SampleService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
@@ -12,7 +13,15 @@ import org.springframework.web.bind.annotation.*;
 public class SampleController {
 
     @Autowired
-    SampleService sampleService;
+    private SampleService sampleService;
+
+    @Value("${app.name}")
+    private String appName;
+
+    @GetMapping(value = "/getAppName")
+    public String getAppName() {
+        return appName;
+    }
 
     @GetMapping(value = "/getServiceName")
     public String getServiceName() {
