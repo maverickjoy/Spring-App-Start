@@ -18,6 +18,9 @@ public class SampleController {
     @Value("${app.name}")
     private String appName;
 
+    @Value("${app.deleted.token:DEFAULT_DELETED_TOKEN}")
+    private String deleted;
+
     @GetMapping(value = "/getAppName")
     public String getAppName() {
         return appName;
@@ -59,5 +62,11 @@ public class SampleController {
     public String dummyGet(@PathVariable("name") String name, @RequestParam int id) {
         log.info("Dummy Get End Point Called with following name {} and id {}", name, id);
         return name;
+    }
+
+    @DeleteMapping(value = "/dummyDelete/{name}")
+    public String dummyDelete(@PathVariable("name") String name) {
+        log.info("Started Deleting name : {}", name);
+        return deleted;
     }
 }

@@ -1,12 +1,15 @@
 package com.demo.project.SpringDemoApp.service;
 
+import com.demo.project.SpringDemoApp.model.CustomisedInfoStoringException;
 import com.demo.project.SpringDemoApp.model.User;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.time.ZonedDateTime;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -17,6 +20,9 @@ import java.util.Map;
 public class SampleService {
 
     private HashMap<Integer, String> userIdToName;
+
+    @Autowired
+    private RestTemplate restTemplate;
 
     public SampleService() {
         this.userIdToName = new HashMap<>();
@@ -35,6 +41,7 @@ public class SampleService {
 
     public String getEmailById(int id) {
         sendDummyGetRequest();
+        sendDummyDeleteRequest();
         return "email";
     }
 
@@ -42,6 +49,21 @@ public class SampleService {
         log.info("Saving user : {}", user.toString());
         sendDummyPostRequest();
         return user;
+    }
+
+    public int getIdWithException(int id) {
+        log.info("Will throw exception if id is 3 present given id {}", id);
+        if(id == 3)
+            throw new CustomisedInfoStoringException("Vikram", ZonedDateTime.now());
+        return id;
+    }
+
+    private void sendDummyDeleteRequest() {
+        log.info("Sending Dummy Delete Request");
+        String deleteUrl = "http://localhost:1337/api/sample/dummyDelete/{name}";
+        Map<String, String> deleteParams = new HashMap<>();
+        deleteParams.put("name", "Mohan");
+        restTemplate.delete(deleteUrl, deleteParams);
     }
 
     private void sendDummyGetRequest() {
